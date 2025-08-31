@@ -42,24 +42,7 @@
 
 ---
 
-## 🧠 How It Works
 
-```mermaid
-flowchart TD
-A[User Search] --> B[Fetch from TMDB API]
-B --> C{Endpoints}
-C -->|/discover/movie| D[Movie Data]
-C -->|/search/movie| E[Search Results]
-C -->|/movie/{id}/videos| F[Trailers]
-C -->|/movie/{id}/credits| G[Cast & Crew]
-
-D --> H[Render Cards]
-E --> H[Render Cards]
-F --> I[Open Trailer Modal]
-G --> J[Show Details]
-```
-
----
 
 ## 🧪 Setup Locally
 

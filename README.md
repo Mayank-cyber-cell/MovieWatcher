@@ -61,7 +61,7 @@ const API_KEY = 'your_api_key_here';
 
 Open index.html in any browser – you're good to go!
 
-##📦 Future Plans
+#📦 Future Plans
 🎭 Filter by genre (e.g., Anime, Cartoons, Dramas, etc.)
 
 🗃 Tabs for different content types: Movies, Series, Documentaries
@@ -72,13 +72,13 @@ Open index.html in any browser – you're good to go!
 
 🔐 User accounts & personalized watchlists
 
-##🤝 Contributing
+#🤝 Contributing
 Pull requests are welcome! If you'd like to improve styling, features, or performance, feel free to fork and submit a PR.
 
-##📄 License
+#📄 License
 This project is licensed under the MIT License.
 
-##🙋‍♂️ Author
+#🙋‍♂️ Author
 Made with ❤️ by Mayank Kumar Shah
 🪪 Developer | UI Designer | Film Buff
 📬 Feel free to connect and contribute!

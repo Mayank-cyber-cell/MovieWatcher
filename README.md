@@ -4,12 +4,6 @@
 
 🌐 **Live Demo**: [https://movieswatchx.netlify.app](https://movieswatchx.netlify.app)
 
----
-
-## 📸 Preview
-
-![MovieWatcherX Screenshot](https://user-images.githubusercontent.com/your-screenshot-url-here)  
-<sub>(Add your Netlify screenshot or screen recording here)</sub>
 
 ---
 

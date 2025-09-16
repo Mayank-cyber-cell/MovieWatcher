@@ -1,10 +1,9 @@
 <div align="center">
 
-# 🎬 MovieWatcherXxxx
+# 🎬 MovieWatcherX
 
 ✨ *Your ultimate movie & series discovery web app!* ✨
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/3e7fa71c-xxxx-xxxx-xxxx/deploy-status)](https://movieswatchx.netlify.app)
 ![GitHub Repo stars](https://img.shields.io/github/stars/Mayank-cyber-cell/MovieWatcher?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Mayank-cyber-cell/MovieWatcher?style=social)
 

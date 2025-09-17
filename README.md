@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 MovieWatcherXxxx
+# 🎬 MovieWatcherXxx
 
 ✨ *Your ultimate movie & series discovery web app!* ✨
 

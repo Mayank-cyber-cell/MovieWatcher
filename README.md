@@ -1,8 +1,6 @@
 <div align="center">
 
-# 🎬 MovieWatcherXx
-
-✨ *Your ultimate movie & series discovery web app!* ✨
+# 🎬 MovieWatcherX
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/Mayank-cyber-cell/MovieWatcher?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/Mayank-cyber-cell/MovieWatcher?style=social)

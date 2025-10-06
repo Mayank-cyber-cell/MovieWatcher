@@ -30,7 +30,7 @@ export const Header: React.FC<HeaderProps> = ({
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
             </div>
             <h1 className={`text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent`}>
-              MovieMagic
+              MovieWatcherX
             </h1>
           </div>
           

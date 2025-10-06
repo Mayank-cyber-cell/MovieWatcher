@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
               </div>
               <h3 className="text-xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
-                MovieMagic
+                MovieWatcherX
               </h3>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed">

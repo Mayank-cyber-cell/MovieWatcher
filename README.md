@@ -15,7 +15,7 @@
 
 ## 🚀 Features
 
-- 🔍 *Search movies and TV shows in real-time*
+- 🔍 *Search movies and TV shows in real-Time*
 - 🎥 *Watch official YouTube trailers directly*
 - 👤 *View cast, crew, and detailed overviews*
 - 🌟 *Rate indicators with color coding*
@@ -48,7 +48,7 @@ git clone https://github.com/Mayank-cyber-cell/MovieWatcher.git
 cd MovieWatcher
 
 # Insert your TMDB API key in script.js
-const API_KEY = 'your_api_key_here';
+const API_KEY = 'your_TDMB_api_key_here';
 
 # Run locally
 open index.html
@@ -68,7 +68,7 @@ open index.html
 
 ## 🤝 Contributing
 
-💡 Pull requests are welcome! If you'd like to improve styling, features, or performance, feel free to fork and submit a PR.
+💡 Pull requests are welcome! If you had like to improve styling, features, or performance, feel free to fork and submit a PR.
 
 ---
 

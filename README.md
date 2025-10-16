@@ -15,7 +15,7 @@
 
 ## 🚀 Features
 
-- 🔍 *Search movies and TV shows in real-Time*
+- 🔍 *Search movies and TV shows in real-time*
 - 🎥 *Watch official YouTube trailers directly*
 - 👤 *View cast, crew, and detailed overviews*
 - 🌟 *Rate indicators with color coding*

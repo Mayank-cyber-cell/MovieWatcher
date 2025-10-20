@@ -6,7 +6,6 @@
 ![GitHub forks](https://img.shields.io/github/forks/Mayank-cyber-cell/MovieWatcher?style=social)
 
 
-
 🌐 **Live Demo**: [movieswatchx.netlify.app](https://movieswatchx.netlify.app)
 
 </div>

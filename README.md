@@ -13,7 +13,6 @@
 
 ---
 
-
 ## 🚀 Features
 
 - 🔍 *Search movies and TV shows in real-Time*

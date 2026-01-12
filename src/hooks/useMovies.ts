@@ -9,7 +9,7 @@ interface Movie {
   release_date: string;
 }
 
-const API_KEY = '3fd2be6f0c70a2a598f084ddfb75487c';
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 export const useMovies = () => {

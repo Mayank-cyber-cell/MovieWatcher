@@ -16,6 +16,7 @@ interface MovieGridProps {
   favorites: number[];
   onToggleFavorite: (movieId: number) => void;
   onWatchTrailer: (movieId: number) => void;
+  onSearchSuggestion: (suggestion: string) => void;
   loading: boolean;
   searchTerm: string;
   selectedGenre: number | null;
@@ -27,6 +28,7 @@ export const MovieGrid: React.FC<MovieGridProps> = ({
   favorites,
   onToggleFavorite,
   onWatchTrailer,
+  onSearchSuggestion,
   loading,
   searchTerm,
   selectedGenre,
@@ -96,6 +98,7 @@ export const MovieGrid: React.FC<MovieGridProps> = ({
             {['Avengers', 'Batman', 'Spider-Man', 'Star Wars'].map((suggestion) => (
               <button
                 key={suggestion}
+                onClick={() => onSearchSuggestion(suggestion)}
                 className="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-full transition-colors duration-300"
               >
                 {suggestion}

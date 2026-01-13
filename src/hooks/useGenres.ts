@@ -5,8 +5,8 @@ interface Genre {
   name: string;
 }
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const BASE_URL = 'https://api.themoviedb.org/3';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const useGenres = () => {
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -18,16 +18,19 @@ export const useGenres = () => {
     setError(null);
 
     try {
-      if (!API_KEY || API_KEY === 'your_api_key_here') {
-        throw new Error('TMDB API key is not configured. Please add your API key to the .env file.');
-      }
+      const params = new URLSearchParams();
+      params.append('endpoint', '/genre/movie/list');
 
-      const response = await fetch(`${BASE_URL}/genre/movie/list?api_key=${API_KEY}`);
+      const url = `${SUPABASE_URL}/functions/v1/tmdb-proxy?${params.toString()}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('Invalid TMDB API key. Please check your .env file.');
-        }
         throw new Error(`Failed to fetch genres: ${response.statusText}`);
       }
 

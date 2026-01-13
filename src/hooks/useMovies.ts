@@ -9,8 +9,8 @@ interface Movie {
   release_date: string;
 }
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-const BASE_URL = 'https://api.themoviedb.org/3';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -22,26 +22,28 @@ export const useMovies = () => {
     setError(null);
 
     try {
-      if (!API_KEY || API_KEY === 'your_api_key_here') {
-        throw new Error('TMDB API key is not configured. Please add your API key to the .env file.');
-      }
-
-      let url;
+      const params = new URLSearchParams();
 
       if (searchTerm) {
-        url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchTerm)}`;
+        params.append('endpoint', '/search/movie');
+        params.append('query', searchTerm);
       } else if (genreId) {
-        url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=1&with_genres=${genreId}`;
+        params.append('endpoint', '/discover/movie');
+        params.append('genreId', genreId.toString());
       } else {
-        url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=1`;
+        params.append('endpoint', '/discover/movie');
       }
 
-      const response = await fetch(url);
+      const url = `${SUPABASE_URL}/functions/v1/tmdb-proxy?${params.toString()}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
       if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error('Invalid TMDB API key. Please check your .env file.');
-        }
         throw new Error(`Failed to fetch movies: ${response.statusText}`);
       }
 
@@ -57,19 +59,27 @@ export const useMovies = () => {
 
   const getTrailerUrl = async (movieId: number): Promise<string | null> => {
     try {
-      const response = await fetch(
-        `${BASE_URL}/movie/${movieId}/videos?api_key=${API_KEY}`
-      );
-      
+      const params = new URLSearchParams();
+      params.append('endpoint', `/movie/${movieId}/videos`);
+
+      const url = `${SUPABASE_URL}/functions/v1/tmdb-proxy?${params.toString()}`;
+
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
       if (!response.ok) {
         throw new Error('Failed to fetch trailer');
       }
-      
+
       const data = await response.json();
       const trailer = data.results.find(
         (video: any) => video.type === 'Trailer' && video.site === 'YouTube'
       );
-      
+
       return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
     } catch (err) {
       console.error('Error fetching trailer:', err);

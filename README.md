@@ -30,29 +30,44 @@
 
 | Technology     | Description                    |
 |----------------|--------------------------------|
-| **HTML5**      | Semantic markup                |
-| **CSS3**       | Custom styles + media queries  |
-| **JavaScript** | Vanilla JS for logic & fetch   |
-| **AOS.js**     | Scroll animations              |
+| **React**      | UI library                     |
+| **TypeScript** | Type-safe JavaScript           |
+| **Tailwind**   | Utility-first CSS framework    |
+| **Vite**       | Fast build tool & dev server   |
 | **TMDB API**   | Movie/Series data source       |
 | **Netlify**    | Hosting & deployment           |
 
 ---
 
-
-
 ## 🧪 Setup Locally
 
 ```bash
+# Clone the repository
 git clone https://github.com/Mayank-cyber-cell/MovieWatcher.git
 cd MovieWatcher
 
-# Insert your TMDB API key in script.js
-const API_KEY = 'your_TDMB_api_key_here';
-
-# Run locally
-open index.html
+# Install dependencies
+npm install
 ```
+
+### 🔑 Configure TMDB API Key
+
+1. Visit [TMDB](https://www.themoviedb.org/signup) and create a free account
+2. Go to [API Settings](https://www.themoviedb.org/settings/api) and request an API key
+3. Copy your API key
+4. Open the `.env` file in the project root
+5. Replace `your_api_key_here` with your actual API key:
+   ```
+   VITE_TMDB_API_KEY=your_actual_api_key_here
+   ```
+
+### ▶️ Run the App
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to the local server URL shown in the terminal.
 
 ---
 

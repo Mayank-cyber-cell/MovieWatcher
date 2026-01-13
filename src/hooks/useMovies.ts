@@ -20,10 +20,14 @@ export const useMovies = () => {
   const fetchMovies = async (searchTerm?: string, genreId?: number | null) => {
     setLoading(true);
     setError(null);
-    
+
     try {
+      if (!API_KEY || API_KEY === 'your_api_key_here') {
+        throw new Error('TMDB API key is not configured. Please add your API key to the .env file.');
+      }
+
       let url;
-      
+
       if (searchTerm) {
         url = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchTerm)}`;
       } else if (genreId) {
@@ -31,13 +35,16 @@ export const useMovies = () => {
       } else {
         url = `${BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}&page=1`;
       }
-      
+
       const response = await fetch(url);
-      
+
       if (!response.ok) {
-        throw new Error('Failed to fetch movies');
+        if (response.status === 401) {
+          throw new Error('Invalid TMDB API key. Please check your .env file.');
+        }
+        throw new Error(`Failed to fetch movies: ${response.statusText}`);
       }
-      
+
       const data = await response.json();
       setMovies(data.results || []);
     } catch (err) {

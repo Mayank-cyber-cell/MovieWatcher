@@ -6,7 +6,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "Content-Type, Authorization, X-Client-Info, Apikey",
 };
 
-const TMDB_API_KEY = Deno.env.get("TMDB_API_KEY");
+const TMDB_API_KEY = "1894131c20e1221bc43d9615a77dfbf5";
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
 Deno.serve(async (req: Request) => {

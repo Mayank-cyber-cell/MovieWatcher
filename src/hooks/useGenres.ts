@@ -5,8 +5,24 @@ interface Genre {
   name: string;
 }
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const getSupabaseUrl = () => {
+  return import.meta.env.VITE_SUPABASE_URL || '';
+};
+
+const getSupabaseAnonKey = () => {
+  return import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+};
+
+const validateConfig = () => {
+  const url = getSupabaseUrl();
+  const key = getSupabaseAnonKey();
+
+  if (!url || !key) {
+    console.error('Missing configuration - Supabase URL or ANON KEY not found');
+    return false;
+  }
+  return true;
+};
 
 export const useGenres = () => {
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -18,6 +34,13 @@ export const useGenres = () => {
     setError(null);
 
     try {
+      if (!validateConfig()) {
+        throw new Error('Application configuration error. Please refresh the page.');
+      }
+
+      const SUPABASE_URL = getSupabaseUrl();
+      const SUPABASE_ANON_KEY = getSupabaseAnonKey();
+
       const params = new URLSearchParams();
       params.append('endpoint', '/genre/movie/list');
 
@@ -31,13 +54,17 @@ export const useGenres = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch genres: ${response.statusText}`);
+        const errorText = await response.text().catch(() => response.statusText);
+        console.error(`Genres API Error - Status: ${response.status}, Message: ${errorText}`);
+        throw new Error(`Failed to fetch genres (${response.status})`);
       }
 
       const data = await response.json();
       setGenres(data.genres || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while fetching genres';
+      console.error('Genre fetch error:', errorMessage);
+      setError(errorMessage);
       setGenres([]);
     } finally {
       setLoading(false);

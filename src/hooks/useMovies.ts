@@ -9,8 +9,24 @@ interface Movie {
   release_date: string;
 }
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const getSupabaseUrl = () => {
+  return import.meta.env.VITE_SUPABASE_URL || '';
+};
+
+const getSupabaseAnonKey = () => {
+  return import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+};
+
+const validateConfig = () => {
+  const url = getSupabaseUrl();
+  const key = getSupabaseAnonKey();
+
+  if (!url || !key) {
+    console.error('Missing configuration - Supabase URL or ANON KEY not found');
+    return false;
+  }
+  return true;
+};
 
 export const useMovies = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -22,6 +38,13 @@ export const useMovies = () => {
     setError(null);
 
     try {
+      if (!validateConfig()) {
+        throw new Error('Application configuration error. Please refresh the page.');
+      }
+
+      const SUPABASE_URL = getSupabaseUrl();
+      const SUPABASE_ANON_KEY = getSupabaseAnonKey();
+
       const params = new URLSearchParams();
 
       if (searchTerm) {
@@ -44,13 +67,17 @@ export const useMovies = () => {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch movies: ${response.statusText}`);
+        const errorText = await response.text().catch(() => response.statusText);
+        console.error(`API Error - Status: ${response.status}, Message: ${errorText}`);
+        throw new Error(`Failed to fetch movies (${response.status})`);
       }
 
       const data = await response.json();
       setMovies(data.results || []);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while fetching movies';
+      console.error('Movie fetch error:', errorMessage);
+      setError(errorMessage);
       setMovies([]);
     } finally {
       setLoading(false);
@@ -59,6 +86,14 @@ export const useMovies = () => {
 
   const getTrailerUrl = async (movieId: number): Promise<string | null> => {
     try {
+      if (!validateConfig()) {
+        console.error('Application configuration error');
+        return null;
+      }
+
+      const SUPABASE_URL = getSupabaseUrl();
+      const SUPABASE_ANON_KEY = getSupabaseAnonKey();
+
       const params = new URLSearchParams();
       params.append('endpoint', `/movie/${movieId}/videos`);
 
@@ -72,7 +107,8 @@ export const useMovies = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch trailer');
+        console.error(`Trailer fetch failed - Status: ${response.status}`);
+        return null;
       }
 
       const data = await response.json();
@@ -82,7 +118,7 @@ export const useMovies = () => {
 
       return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
     } catch (err) {
-      console.error('Error fetching trailer:', err);
+      console.error('Error fetching trailer:', err instanceof Error ? err.message : err);
       return null;
     }
   };

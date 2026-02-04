@@ -41,6 +41,7 @@
 
 ## 🧪 Setup Locally
 
+
 ```bash
 # Clone the repository
 git clone https://github.com/Mayank-cyber-cell/MovieWatcher.git

@@ -10,12 +10,14 @@ interface Movie {
 }
 
 const getSupabaseUrl = (): string => {
-  const url = import.meta.env.VITE_SUPABASE_URL;
+  // Fallback to window object if env var is not available
+  const url = import.meta.env.VITE_SUPABASE_URL || (window as any).__VITE_SUPABASE_URL;
   return typeof url === 'string' ? url : '';
 };
 
 const getSupabaseAnonKey = (): string => {
-  const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  // Fallback to window object if env var is not available
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY || (window as any).__VITE_SUPABASE_ANON_KEY;
   return typeof key === 'string' ? key : '';
 };
 

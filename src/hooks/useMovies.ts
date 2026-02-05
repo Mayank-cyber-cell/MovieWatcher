@@ -9,20 +9,27 @@ interface Movie {
   release_date: string;
 }
 
-const getSupabaseUrl = () => {
-  return import.meta.env.VITE_SUPABASE_URL || '';
+const getSupabaseUrl = (): string => {
+  const url = import.meta.env.VITE_SUPABASE_URL;
+  return typeof url === 'string' ? url : '';
 };
 
-const getSupabaseAnonKey = () => {
-  return import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const getSupabaseAnonKey = (): string => {
+  const key = import.meta.env.VITE_SUPABASE_ANON_KEY;
+  return typeof key === 'string' ? key : '';
 };
 
-const validateConfig = () => {
+const validateConfig = (): boolean => {
   const url = getSupabaseUrl();
   const key = getSupabaseAnonKey();
 
   if (!url || !key) {
-    console.error('Missing configuration - Supabase URL or ANON KEY not found');
+    console.error('Missing Supabase configuration', {
+      hasUrl: !!url,
+      hasKey: !!key,
+      url: url ? 'present' : 'missing',
+      key: key ? 'present' : 'missing',
+    });
     return false;
   }
   return true;

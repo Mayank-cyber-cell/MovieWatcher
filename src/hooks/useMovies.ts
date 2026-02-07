@@ -9,28 +9,14 @@ interface Movie {
   release_date: string;
 }
 
-const getSupabaseUrl = (): string => {
-  // Fallback to window object if env var is not available
-  const url = import.meta.env.VITE_SUPABASE_URL || (window as any).__VITE_SUPABASE_URL;
-  return typeof url === 'string' ? url : '';
-};
-
-const getSupabaseAnonKey = (): string => {
-  // Fallback to window object if env var is not available
-  const key = import.meta.env.VITE_SUPABASE_ANON_KEY || (window as any).__VITE_SUPABASE_ANON_KEY;
-  return typeof key === 'string' ? key : '';
-};
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 const validateConfig = (): boolean => {
-  const url = getSupabaseUrl();
-  const key = getSupabaseAnonKey();
-
-  if (!url || !key) {
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
     console.error('Missing Supabase configuration', {
-      hasUrl: !!url,
-      hasKey: !!key,
-      url: url ? 'present' : 'missing',
-      key: key ? 'present' : 'missing',
+      hasUrl: !!SUPABASE_URL,
+      hasKey: !!SUPABASE_ANON_KEY,
     });
     return false;
   }
@@ -50,9 +36,6 @@ export const useMovies = () => {
       if (!validateConfig()) {
         throw new Error('Application configuration error. Please refresh the page.');
       }
-
-      const SUPABASE_URL = getSupabaseUrl();
-      const SUPABASE_ANON_KEY = getSupabaseAnonKey();
 
       const params = new URLSearchParams();
 
@@ -99,9 +82,6 @@ export const useMovies = () => {
         console.error('Application configuration error');
         return null;
       }
-
-      const SUPABASE_URL = getSupabaseUrl();
-      const SUPABASE_ANON_KEY = getSupabaseAnonKey();
 
       const params = new URLSearchParams();
       params.append('endpoint', `/movie/${movieId}/videos`);

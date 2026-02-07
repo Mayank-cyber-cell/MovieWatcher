@@ -9,14 +9,21 @@ interface Movie {
   release_date: string;
 }
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const getSupabaseUrl = (): string => {
+  return import.meta.env.VITE_SUPABASE_URL || '';
+};
+
+const getSupabaseAnonKey = (): string => {
+  return import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+};
 
 const validateConfig = (): boolean => {
-  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+  const url = getSupabaseUrl();
+  const key = getSupabaseAnonKey();
+  if (!url || !key) {
     console.error('Missing Supabase configuration', {
-      hasUrl: !!SUPABASE_URL,
-      hasKey: !!SUPABASE_ANON_KEY,
+      hasUrl: !!url,
+      hasKey: !!key,
     });
     return false;
   }
@@ -49,11 +56,11 @@ export const useMovies = () => {
         params.append('endpoint', '/discover/movie');
       }
 
-      const url = `${SUPABASE_URL}/functions/v1/tmdb-proxy?${params.toString()}`;
+      const url = `${getSupabaseUrl()}/functions/v1/tmdb-proxy?${params.toString()}`;
 
       const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${getSupabaseAnonKey()}`,
           'Content-Type': 'application/json',
         },
       });
@@ -86,11 +93,11 @@ export const useMovies = () => {
       const params = new URLSearchParams();
       params.append('endpoint', `/movie/${movieId}/videos`);
 
-      const url = `${SUPABASE_URL}/functions/v1/tmdb-proxy?${params.toString()}`;
+      const url = `${getSupabaseUrl()}/functions/v1/tmdb-proxy?${params.toString()}`;
 
       const response = await fetch(url, {
         headers: {
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'Authorization': `Bearer ${getSupabaseAnonKey()}`,
           'Content-Type': 'application/json',
         },
       });

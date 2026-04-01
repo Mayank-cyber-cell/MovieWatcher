@@ -1,5 +1,5 @@
 <div align="center">  
-
+ 
 # 🎬 MovieWatcherX
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/Mayank-cyber-cell/MovieWatcher?style=social)

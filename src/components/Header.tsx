@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search, Moon, Sun, Film } from 'lucide-react';
+import { Search, Moon, Sun, Film, LogOut } from 'lucide-react';
 
 interface HeaderProps {
   searchTerm: string;
@@ -7,6 +7,7 @@ interface HeaderProps {
   isDarkMode: boolean;
   toggleTheme: () => void;
   onSearch: (e: React.FormEvent) => void;
+  onSignOut?: () => Promise<void>;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,7 +16,17 @@ export const Header: React.FC<HeaderProps> = ({
   isDarkMode,
   toggleTheme,
   onSearch,
+  onSignOut,
 }) => {
+  const handleSignOut = async () => {
+    if (onSignOut) {
+      try {
+        await onSignOut();
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    }
+  };
   return (
     <header className={`sticky top-0 z-50 backdrop-blur-sm border-b transition-all duration-300 ${
       isDarkMode 
@@ -35,11 +46,24 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           
           <div className="flex items-center gap-4">
+            {onSignOut && (
+              <button
+                onClick={handleSignOut}
+                className={`p-2 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                  isDarkMode
+                    ? 'bg-slate-800 hover:bg-slate-700'
+                    : 'bg-slate-100 hover:bg-slate-200'
+                }`}
+                aria-label="Sign out"
+              >
+                <LogOut className={`w-5 h-5 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`} />
+              </button>
+            )}
             <button
               onClick={toggleTheme}
-              className={`p-2 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
-                isDarkMode 
-                  ? 'bg-slate-800 hover:bg-slate-700' 
+              className={`p-2 rounded-full transition-all duration-300 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                isDarkMode
+                  ? 'bg-slate-800 hover:bg-slate-700'
                   : 'bg-slate-100 hover:bg-slate-200'
               }`}
               aria-label="Toggle theme"

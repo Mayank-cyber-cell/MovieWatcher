@@ -8,7 +8,6 @@
 🌐 **Live Demo**:
  [movie-watcher-puce.vercel.app/](movie-watcher-puce.vercel.app/)
 
-
 </div>
 
 ---

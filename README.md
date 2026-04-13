@@ -1,4 +1,4 @@
-<div align="center">  
+<div align="center">   
  
 # 🎬 MovieWatcherX
 https://github.com/Mayank-cyber-cell/MovieWatcher/security
